@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TwitterConsole" GeneratedClassName="TwitterConsoleSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TwitterApiSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">lFpIBIY4zobXxpwoxKHRM5CBuCAW3dOeO4dnCu7BVgCmDt1DLa</Value>
+    </Setting>
+    <Setting Name="TwitterBearerToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AAAAAAAAAAAAAAAAAAAAAOsxkgEAAAAAr8sfjNxLVURpjWjPINNILQOZlVU%3D0rIZkFvsnQG5eVtUmSQV13z9NNaQnHJu0RBnEV6ZzC9JdqTifG</Value>
+    </Setting>
+    <Setting Name="TwitterApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DdfG1vF2UD0LKYn7D7yIK6R0k</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
