@@ -1,4 +1,5 @@
 ﻿// the only reference needed for ViewModels so we will keep it here
+using TwitterConsole.Data;
 using TwitterConsole.Listener;
 using TwitterConsole.ViewModels;
 
@@ -12,6 +13,10 @@ namespace TwitterConsole.Windows
     {
         // Set up a logger to log errors. Normally it would be a LogAnalytics logger but for now we will log errors to the console.
         private ConsoleLogger logger = new();
+
+        // Reference to a Basic Data Store
+        private BasicDataStore dataStore;
+
         TwitterListener listener;
 
         #region Constructor
@@ -22,7 +27,12 @@ namespace TwitterConsole.Windows
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext= new MainVM(logger);
+
+            // Set up the datastore
+            dataStore=new BasicDataStore(logger);
+
+            // Set up the View Model
+            this.DataContext= new MainVM(logger, dataStore);
 
             // if Setup has not run yet go to it on startup
             if(String.IsNullOrEmpty(TwitterConsoleSettings.Default.TwitterApiKey))

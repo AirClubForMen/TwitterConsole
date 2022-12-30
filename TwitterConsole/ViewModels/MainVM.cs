@@ -14,6 +14,7 @@ namespace TwitterConsole.ViewModels
         #region Local Variables
         // Use ILogger and allow the main window to determine the implementation 
         ILogger Logger { get; set; }
+        IDataStore DataStore { get; set; }
 
         // reference to the listener
         TwitterListener listener;
@@ -22,12 +23,13 @@ namespace TwitterConsole.ViewModels
 
         #region Setup
         /// <summary>
-        /// Constructor with the logger passes in
+        /// Constructor with the logger and DataStore passed in
         /// </summary>
         /// <param name="logger"></param>
-        public MainVM(ILogger logger)
+        public MainVM(ILogger logger, IDataStore dataStore)
         {
             this.Logger = logger;
+            this.DataStore  = dataStore;
         }
 
         #endregion
@@ -44,7 +46,7 @@ namespace TwitterConsole.ViewModels
             Logger.LogInformation("Starting Listener");
 
             // Set up the listener with the Keys, 
-            listener = new TwitterListener(Logger, TwitterConsoleSettings.Default.TwitterApiKey, TwitterConsoleSettings.Default.TwitterApiSecret, TwitterConsoleSettings.Default.TwitterBearerToken);
+            listener = new TwitterListener(Logger,DataStore, TwitterConsoleSettings.Default.TwitterApiKey, TwitterConsoleSettings.Default.TwitterApiSecret, TwitterConsoleSettings.Default.TwitterBearerToken);
 
             // Need a way to call back from the listenere if something errors out
             listener.ListenerStoppedEvent += ListenerStopped;
@@ -98,12 +100,10 @@ namespace TwitterConsole.ViewModels
             {
                 // refresh the values that have changed
                 Refresh();
-                // keep it small so it doesn;t get huge and slow things down
-                if (DataStore.HashTagCounts.Count > 1000)
-                {
-                    DataStore.HashTagCounts = new Dictionary<string, int>(DataStore.HashTagCounts.OrderByDescending(x => x.Value).Take(100));
-                    Logger.LogInformation("Cleaning up list of Hash Tag Counts");
-                }
+
+                // Trim the tweets down if needed
+                DataStore.TrimTopXHashTags(1000, 100);
+               
                 // stop refreshing and leave
                 if(!IsListening)
                     {timer.Dispose(); return; }
@@ -217,7 +217,7 @@ namespace TwitterConsole.ViewModels
                 int ranking = 1;
 
                 // grab the top 10 and put them in the list
-                foreach (var hashTag in DataStore.HashTagCounts.OrderByDescending(x => x.Value).Take(10))
+                foreach (var hashTag in DataStore.GetTopXHashTags(10))
                 {
                     rankedTweets.Add(new HashTagRanking() { HashTagIndex = ranking++, HashTagValue = hashTag.Key, HashTagCount = hashTag.Value });
                 }

@@ -23,7 +23,8 @@ namespace TwitterConsole.Listener
     public class TwitterListener
     {
         #region Private Variables
-        private static ILogger Logger;
+        private static ILogger Logger { get; set; }
+        private IDataStore DataStore { get; set; }
         private string ApiKey = string.Empty;
         private string ApiSecret = string.Empty;
         private string BearerToken = string.Empty;
@@ -46,10 +47,11 @@ namespace TwitterConsole.Listener
         /// <param name="apiSecret">API Secret</param>
         /// <param name="bearerToken">Bearer token</param>
         /// <param name="englishOnly"></param>
-        public TwitterListener(ILogger logger, string apiKey, string apiSecret, string bearerToken, bool englishOnly=true)
+        public TwitterListener(ILogger logger,IDataStore dataStore, string apiKey, string apiSecret, string bearerToken, bool englishOnly=true)
         {
             // assign the logger
             Logger = logger;
+            DataStore= dataStore;
             this.ApiSecret = apiSecret;
             this.ApiKey = apiKey;
             this.BearerToken = bearerToken;
@@ -194,24 +196,7 @@ namespace TwitterConsole.Listener
                 Logger.LogError($"\nNull Tweet");
                 return;
             }
-            // would like to filter beforehand 
-            //if (EnglishOnly && tweet.Language != "en")
-            //    return;
-            DataStore.TotalTweets += 1;
-
-            // Make sure Entities and/or HashTags don't come in as null and there are some hashTags
-            if (tweet.Entities == null || tweet.Entities.Hashtags == null || tweet.Entities.Hashtags.Count == 0) return;
-
-            // increment counts and dictionaries
-            foreach (var hashTag in tweet.Entities.Hashtags)
-            {
-                if (DataStore.HashTagCounts.ContainsKey(hashTag.Tag))
-                    DataStore.HashTagCounts[hashTag.Tag] += 1;
-                else
-                    DataStore.HashTagCounts.Add(hashTag.Tag,1);
-                
-                DataStore.TotalHashTags += 1;
-            }
+            DataStore.AddTweet(tweet);
 
             return;
         }
