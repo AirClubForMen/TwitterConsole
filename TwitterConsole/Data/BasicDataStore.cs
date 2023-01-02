@@ -1,5 +1,4 @@
-﻿using LinqToTwitter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,21 +55,21 @@ namespace TwitterConsole.Data
         /// Add Tweet - Add to Dictionary
         /// </summary>
         /// <param name="tweet"></param>
-        public void AddTweet(Tweet tweet)
+        public void AddHashTags(List<string> hashTags)
         {
             // would like to filter beforehand 
             TotalTweets += 1;
 
             // Make sure Entities and/or HashTags don't come in as null and there are some hashTags
-            if (tweet.Entities == null || tweet.Entities.Hashtags == null || tweet.Entities.Hashtags.Count == 0) return;
+            if (hashTags == null || hashTags.Count == 0) return;
 
             // increment counts and dictionaries
-            foreach (var hashTag in tweet.Entities.Hashtags)
+            foreach (var hashTag in hashTags)
             {
-                if (HashTagCounts.ContainsKey(hashTag.Tag))
-                    HashTagCounts[hashTag.Tag] += 1;
+                if (HashTagCounts.ContainsKey(hashTag))
+                    HashTagCounts[hashTag] += 1;
                 else
-                    HashTagCounts.Add(hashTag.Tag, 1);
+                    HashTagCounts.Add(hashTag, 1);
 
                 TotalHashTags += 1;
             }

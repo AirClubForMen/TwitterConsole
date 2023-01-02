@@ -1,5 +1,4 @@
-﻿using LinqToTwitter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,10 +24,10 @@ namespace TwitterConsole.Data
         int TotalHashTags { get; set; }
 
         /// <summary>
-        /// Add Tweet - Add to Dictionary
+        /// Add Hash Tags for a tweet
         /// </summary>
-        /// <param name="tweet"></param>
-        void AddTweet(Tweet tweet);
+        /// <param name="hashTags">List of HashTags for a tweet</param>
+        void AddHashTags(List<string> hashTags);
 
         /// <summary>
         /// Reset Running Counts

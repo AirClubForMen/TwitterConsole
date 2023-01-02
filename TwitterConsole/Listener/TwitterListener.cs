@@ -196,7 +196,15 @@ namespace TwitterConsole.Listener
                 Logger.LogError($"\nNull Tweet");
                 return;
             }
-            DataStore.AddTweet(tweet);
+            var tagList = new List<string>();
+
+            if (tweet.Entities != null && tweet.Entities.Hashtags != null)
+            {
+                foreach (var hashTag in tweet.Entities.Hashtags)
+                    if (hashTag != null)
+                        tagList.Add(hashTag.Tag);
+            }
+            DataStore.AddHashTags(tagList);
 
             return;
         }
