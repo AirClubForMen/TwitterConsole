@@ -14,7 +14,7 @@ namespace TwitterConsole.Data
         /// <summary>
         /// Reference to a logger
         /// </summary>
-        public ILogger Logger { get; set; }
+        private ILogger Logger { get; set; }
 
         /// <summary>
         /// Constructor with a logger attached
@@ -52,9 +52,9 @@ namespace TwitterConsole.Data
 
 
         /// <summary>
-        /// Add Tweet - Add to Dictionary
+        /// Add Has Tags from a tweet
         /// </summary>
-        /// <param name="tweet"></param>
+        /// <param name="hashTags">List of Hash Tags for a tweet</param>
         public void AddHashTags(List<string> hashTags)
         {
             // would like to filter beforehand 

@@ -8,20 +8,16 @@ namespace TwitterConsole.Data
 {
     public interface IDataStore
     {
-        /// <summary>
-        /// Set up a logger 
-        /// </summary>
-        ILogger Logger { get; set; }
 
         /// <summary>
         /// Total Number of Tweets Read
         /// </summary>
-        int TotalTweets { get; set; }
+        int TotalTweets { get; }
 
         /// <summary>
         /// Total Number of Unique Hash Tags
         /// </summary>
-        int TotalHashTags { get; set; }
+        int TotalHashTags { get; }
 
         /// <summary>
         /// Add Hash Tags for a tweet
