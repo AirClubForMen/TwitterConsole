@@ -28,12 +28,14 @@ namespace TwitterConsole.Data
         /// <summary>
         /// Total Number of Tweets Read
         /// </summary>
-        public int TotalTweets { get; set; } = 0;
+        public int TotalTweets { get { return totalTweets; } }
+        private int totalTweets=0;
 
         /// <summary>
         /// Total Number of Unique Hash Tags
         /// </summary>
-        public int TotalHashTags { get; set; } = 0;
+        public int TotalHashTags { get { return totalHashTags; } }
+        private int totalHashTags = 0;
 
         /// <summary>
         /// Dictionary of Hash Tags with their total Counts
@@ -46,8 +48,8 @@ namespace TwitterConsole.Data
         public void ResetCounts()
         {
             HashTagCounts.Clear();
-            TotalTweets = 0;
-            TotalHashTags = 0;
+            totalTweets = 0;
+            totalHashTags = 0;
         }
 
 
@@ -58,7 +60,7 @@ namespace TwitterConsole.Data
         public void AddHashTags(List<string> hashTags)
         {
             // would like to filter beforehand 
-            TotalTweets += 1;
+            totalTweets += 1;
 
             // Make sure Entities and/or HashTags don't come in as null and there are some hashTags
             if (hashTags == null || hashTags.Count == 0) return;
@@ -71,7 +73,7 @@ namespace TwitterConsole.Data
                 else
                     HashTagCounts.Add(hashTag, 1);
 
-                TotalHashTags += 1;
+                totalHashTags += 1;
             }
 
         }
